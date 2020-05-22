@@ -1,0 +1,17 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+
+/Asponna/.vs/Asponna/DesignTimeBuild/.dtbcache.v2
+/Asponna/.vs/Asponna/config/applicationhost.config
+/Asponna/Asponna.Api/Logs
+/Asponna/Asponna.Api/obj
+/Asponna/Asponna.Api/bin/Debug/netcoreapp3.1
+/Asponna/Asponna.Application/obj
+/Asponna/Asponna.Application/bin/Debug/netcoreapp3.1
+/Asponna/Asponna.Domain/bin/Debug/netcoreapp3.1
+/Asponna/Asponna.Domain/obj
+/Asponna/Asponna.Infrastructure/obj
+/Asponna/Asponna.Persistence/bin/Debug/netcoreapp3.1
+/Asponna/Asponna.Persistence/obj

@@ -1,0 +1,20 @@
+﻿using Asponna.Domain.Entities;
+using Asponna.Domain.SharedKernel;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace Asponna.Domain.Repositories
+{
+    public interface ICardRepository : IRepository<Card>
+    {
+        Card Insert(Card card);
+
+        void Update(Card card);
+
+        void Delete(Card card);
+
+        Task<Card> GetAsync(int id);
+
+        Task<IEnumerable<Card>> GetAllAsync();
+    }
+}
