@@ -1,4 +1,8 @@
+using Asponna.Application.TaskBoards.Queries;
+using Asponna.Application.TaskBoards.Queries.Types;
 using Asponna.Persistence;
+using GraphiQl;
+using GraphQL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +26,11 @@ namespace Asponna.Api
             services.AddControllers();
 
             services.AddPersistence(Configuration);
+
+            services.AddSingleton<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+            services.AddScoped<AsponnaSchema>();
+            services.AddScoped<TaskBoardType>();
+            services.AddScoped<TaskBoardQuery>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -31,7 +40,7 @@ namespace Asponna.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseGraphiQl();
             app.UseHttpsRedirection();
 
             app.UseRouting();
