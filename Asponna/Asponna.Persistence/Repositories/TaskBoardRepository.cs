@@ -1,8 +1,8 @@
 ﻿using Asponna.Domain.Entities;
 using Asponna.Domain.Repositories;
 using Asponna.Domain.SharedKernel;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Asponna.Persistence.Repositories
@@ -19,7 +19,8 @@ namespace Asponna.Persistence.Repositories
 
         public async Task<IEnumerable<TaskBoard>> GetAllAsync()
         {
-            return await _context.TaskBoards.ToListAsync();
+            await Task.CompletedTask;
+            return _context.TaskBoards.ToList();
         }
 
         public TaskBoard Insert(TaskBoard taskBoard)

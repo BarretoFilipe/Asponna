@@ -1,10 +1,9 @@
-﻿using Asponna.Application.Commons;
-using Asponna.Domain.Repositories;
+﻿using Asponna.Domain.Repositories;
 using GraphQL.Types;
 
 namespace Asponna.Application.TaskBoards.Queries
 {
-    public class TaskBoardQuery : ObjectGraphType, IGraphQueryMarker
+    public class TaskBoardQuery : ObjectGraphType
     {
         public TaskBoardQuery(ITaskBoardRepository taskBoardRepository)
         {

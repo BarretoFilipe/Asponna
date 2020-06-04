@@ -1,13 +1,17 @@
+using Asponna.Api.GraphQL.GraphQLSchema;
+using Asponna.Application.Commons;
 using Asponna.Application.TaskBoards.Queries;
-using Asponna.Application.TaskBoards.Queries.Types;
 using Asponna.Persistence;
-using GraphiQl;
 using GraphQL;
+using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 
 namespace Asponna.Api
 {
@@ -23,14 +27,23 @@ namespace Asponna.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-
             services.AddPersistence(Configuration);
 
-            services.AddSingleton<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+            services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddScoped<AsponnaSchema>();
-            services.AddScoped<TaskBoardType>();
-            services.AddScoped<TaskBoardQuery>();
+
+
+            //services.AddScoped<IGraphQueryMarker, TaskBoardQuery>();
+
+
+            services.AddGraphQL(o => { o.ExposeExceptions = false; })
+                .AddGraphTypes(ServiceLifetime.Scoped);
+
+            services.Configure<KestrelServerOptions>(options => options.AllowSynchronousIO = true);
+            services.Configure<IISServerOptions>(options => options.AllowSynchronousIO = true);
+
+            services.AddMvc(x => x.EnableEndpointRouting = false)
+                .AddNewtonsoftJson(o => o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,17 +53,12 @@ namespace Asponna.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseGraphiQl();
             app.UseHttpsRedirection();
 
-            app.UseRouting();
+            app.UseGraphQL<AsponnaSchema>();
+            app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
 
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseMvc();
         }
     }
 }
