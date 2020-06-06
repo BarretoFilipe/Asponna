@@ -27,5 +27,10 @@
     <ProjectReference Include="..\Asponna.Persistence\Asponna.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\TaskBoards\Mutations\" />
+    <Folder Include="Application\Cards\Mutations\" />
+  </ItemGroup>
+
 
 </Project>

@@ -1,5 +1,6 @@
-using Asponna.Api.GraphQL.GraphQLSchema;
-using Asponna.Application.Commons;
+using Asponna.Api.Application.Tickets.Queries;
+using Asponna.Api.GraphQL;
+using Asponna.Api.GraphQL.Commons;
 using Asponna.Application.TaskBoards.Queries;
 using Asponna.Persistence;
 using GraphQL;
@@ -32,9 +33,8 @@ namespace Asponna.Api
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddScoped<AsponnaSchema>();
 
-
-            //services.AddScoped<IGraphQueryMarker, TaskBoardQuery>();
-
+            services.AddScoped<IGraphBuilder, TaskBoardQuery>();
+            services.AddScoped<IGraphBuilder, CardQuery>();
 
             services.AddGraphQL(o => { o.ExposeExceptions = false; })
                 .AddGraphTypes(ServiceLifetime.Scoped);
