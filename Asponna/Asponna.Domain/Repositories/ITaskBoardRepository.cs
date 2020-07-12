@@ -7,11 +7,13 @@ namespace Asponna.Domain.Repositories
 {
     public interface ITaskBoardRepository : IRepository<TaskBoard>
     {
-        TaskBoard Insert(TaskBoard taskBoard);
+        TaskBoard Create(TaskBoard taskBoard);
 
         void Update(TaskBoard taskBoard);
 
         void Delete(TaskBoard taskBoard);
+
+        Task<TaskBoard> GetAsync(int id);
 
         Task<IEnumerable<TaskBoard>> GetAllAsync();
     }

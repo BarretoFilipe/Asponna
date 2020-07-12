@@ -23,7 +23,12 @@ namespace Asponna.Persistence.Repositories
             return await _context.TaskBoards.ToListAsync();
         }
 
-        public TaskBoard Insert(TaskBoard taskBoard)
+        public async Task<TaskBoard> GetAsync(int id)
+        {
+            return await _context.TaskBoards.FindAsync(id);
+        }
+
+        public TaskBoard Create(TaskBoard taskBoard)
         {
             if (taskBoard.IsTransient())
             {

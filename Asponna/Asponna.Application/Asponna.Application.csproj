@@ -5,12 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GraphQL" Version="2.4.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <ProjectReference Include="..\Asponna.Domain\Asponna.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Asponna.Domain\Asponna.Domain.csproj" />
+    <Folder Include="Commands\TaskBoards\CreateTaskBoard\" />
+    <Folder Include="Commands\TaskBoards\DeleteTaskBoard\" />
+    <Folder Include="Commands\TaskBoards\UpdateTaskBoard\" />
+    <Folder Include="Queries\TaskBoards\GetAll\" />
+    <Folder Include="Queries\TaskBoards\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="8.6.2" />
+    <PackageReference Include="MediatR" Version="8.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

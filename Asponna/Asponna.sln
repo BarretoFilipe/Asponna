@@ -9,17 +9,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{050CA0B4-42A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebVue", "WebVue", "{149CF7ED-1675-4112-AA38-2CDAEF0D5BDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asponna.Api", "Asponna.Api\Asponna.Api.csproj", "{978A7333-82B5-43FD-99A8-7B4CEB0305CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Asponna.Api", "Asponna.Api\Asponna.Api.csproj", "{978A7333-82B5-43FD-99A8-7B4CEB0305CB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{89CD23DF-236C-44C2-8CCE-5C7BE46AEECA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asponna.Domain", "Asponna.Domain\Asponna.Domain.csproj", "{5B1C53B2-43FF-4634-BD21-F4D7C86A7330}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Asponna.Domain", "Asponna.Domain\Asponna.Domain.csproj", "{5B1C53B2-43FF-4634-BD21-F4D7C86A7330}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asponna.Application", "Asponna.Application\Asponna.Application.csproj", "{C772F6EE-A817-4250-873B-1C0113FB87D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Asponna.Application", "Asponna.Application\Asponna.Application.csproj", "{C772F6EE-A817-4250-873B-1C0113FB87D7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{C2793313-2101-4BD4-B781-D751AFDCC140}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asponna.Persistence", "Asponna.Persistence\Asponna.Persistence.csproj", "{FAB2CCB9-A67F-4463-B376-F8D9313D3B73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Asponna.Persistence", "Asponna.Persistence\Asponna.Persistence.csproj", "{FAB2CCB9-A67F-4463-B376-F8D9313D3B73}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{2FD2B1A3-5B27-4173-9044-AABF1C4D21AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{FAB2CCB9-A67F-4463-B376-F8D9313D3B73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAB2CCB9-A67F-4463-B376-F8D9313D3B73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAB2CCB9-A67F-4463-B376-F8D9313D3B73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FD2B1A3-5B27-4173-9044-AABF1C4D21AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FD2B1A3-5B27-4173-9044-AABF1C4D21AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FD2B1A3-5B27-4173-9044-AABF1C4D21AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FD2B1A3-5B27-4173-9044-AABF1C4D21AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

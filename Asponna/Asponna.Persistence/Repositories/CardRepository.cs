@@ -1,8 +1,10 @@
 ﻿using Asponna.Domain.Entities;
 using Asponna.Domain.Repositories;
+using Asponna.Domain.Repositories.Parameters;
 using Asponna.Domain.SharedKernel;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Asponna.Persistence.Repositories
@@ -17,9 +19,20 @@ namespace Asponna.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Card>> GetAllAsync()
+        public async Task<IEnumerable<Card>> GetAllAsync(CardParameter cardParameter)
         {
-            return await _context.Cards.ToListAsync();
+            var cards = _context.Cards.AsQueryable();
+
+            if (cardParameter.TaskBoardId != default)
+                cards = cards.Where(x => x.TaskBoardId == cardParameter.TaskBoardId);
+
+            if (cardParameter.Completed != default)
+                cards = cards.Where(x => x.Completed == cardParameter.Completed);
+
+            return await cards
+                .Take(cardParameter.Take)
+                .Skip(cardParameter.Skip)
+                .ToListAsync();
         }
 
         public async Task<Card> GetAsync(int id)
@@ -27,7 +40,7 @@ namespace Asponna.Persistence.Repositories
             return await _context.Cards.FindAsync(id);
         }
 
-        public Card Insert(Card card)
+        public Card Create(Card card)
         {
             if (card.IsTransient())
             {

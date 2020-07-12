@@ -47,12 +47,12 @@ namespace Asponna.Persistence
         {
             var cards = new[]
             {
-                new Card("Title 1", "Description 1", 1, 1),
-                new Card("Title 2", "Description 2", 2, 1),
-                new Card("Title 3", "Description 3", 3, 1),
-                new Card("Title 4", "Description 4", 4, 2),
-                new Card("Title 5", "Description 5", 5, 2),
-                new Card("Title 6", "Description 6", 6, 3)
+                new Card("Title 1", "Description 1", 1),
+                new Card("Title 2", "Description 2", 1),
+                new Card("Title 3", "Description 3", 1),
+                new Card("Title 4", "Description 4", 2),
+                new Card("Title 5", "Description 5", 2),
+                new Card("Title 6", "Description 6", 3)
             };
 
             context.Cards.AddRange(cards);

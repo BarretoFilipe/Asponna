@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  asponna.api:
+    image: ${DOCKER_REGISTRY-}asponnaapi
+    build:
+      context: .
+      dockerfile: Asponna.Api/Dockerfile

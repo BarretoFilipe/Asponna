@@ -1,18 +1,11 @@
-using Asponna.Api.Application.Tickets.Queries;
-using Asponna.Api.GraphQL;
-using Asponna.Api.GraphQL.Commons;
-using Asponna.Application.TaskBoards.Queries;
+using Asponna.Application;
 using Asponna.Persistence;
-using GraphQL;
-using GraphQL.Server;
-using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
+using Microsoft.OpenApi.Models;
 
 namespace Asponna.Api
 {
@@ -28,22 +21,15 @@ namespace Asponna.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+
             services.AddPersistence(Configuration);
+            services.AddApplication();
 
-            services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
-            services.AddScoped<AsponnaSchema>();
-
-            services.AddScoped<IGraphBuilder, TaskBoardQuery>();
-            services.AddScoped<IGraphBuilder, CardQuery>();
-
-            services.AddGraphQL(o => { o.ExposeExceptions = false; })
-                .AddGraphTypes(ServiceLifetime.Scoped);
-
-            services.Configure<KestrelServerOptions>(options => options.AllowSynchronousIO = true);
-            services.Configure<IISServerOptions>(options => options.AllowSynchronousIO = true);
-
-            services.AddMvc(x => x.EnableEndpointRouting = false)
-                .AddNewtonsoftJson(o => o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Asponna", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,12 +39,19 @@ namespace Asponna.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseHttpsRedirection();
 
-            app.UseGraphQL<AsponnaSchema>();
-            app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Asponna V1");
+                c.RoutePrefix = string.Empty;
+            });
 
-            app.UseMvc();
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

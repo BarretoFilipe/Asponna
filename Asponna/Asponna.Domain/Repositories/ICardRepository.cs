@@ -1,4 +1,5 @@
 ﻿using Asponna.Domain.Entities;
+using Asponna.Domain.Repositories.Parameters;
 using Asponna.Domain.SharedKernel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ namespace Asponna.Domain.Repositories
 {
     public interface ICardRepository : IRepository<Card>
     {
-        Card Insert(Card card);
+        Card Create(Card card);
 
         void Update(Card card);
 
@@ -15,6 +16,6 @@ namespace Asponna.Domain.Repositories
 
         Task<Card> GetAsync(int id);
 
-        Task<IEnumerable<Card>> GetAllAsync();
+        Task<IEnumerable<Card>> GetAllAsync(CardParameter cardParameter);
     }
 }

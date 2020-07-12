@@ -5,12 +5,12 @@ namespace Asponna.Domain.Entities
 {
     public class Card : BaseEntity, IBaseRepository
     {
-        public Card(string title, string description, int position, int taskBoardId)
+        public Card(string title, string description, int taskBoardId)
         {
             SetTitle(title);
             SetDescription(description);
-            SetPosition(position);
             SetTaskBoardId(taskBoardId);
+            Position = 0;
             Completed = false;
         }
 
@@ -18,8 +18,8 @@ namespace Asponna.Domain.Entities
         public string Description { get; private set; }
         public bool Completed { get; private set; }
         public int Position { get; private set; }
-        public TaskBoard TaskBoard { get; private set; }
         public int TaskBoardId { get; private set; }
+        public TaskBoard TaskBoard { get; private set; }
 
         public void SetTitle(string title)
         {
