@@ -22,13 +22,16 @@ namespace Asponna.Domain.Entities
             if (string.IsNullOrWhiteSpace(name))
                 throw new DomainException("Name is empty");
 
+            if (name.Length > 100)
+                throw new DomainException("Maximum Name length is 100");
+
             Name = name;
         }
 
         public void SetPosition(byte position)
         {
             if (position <= 0)
-                throw new DomainException("Position less than or equal to 0");
+                throw new DomainException("Position must be greater than 0");
 
             Position = position;
         }

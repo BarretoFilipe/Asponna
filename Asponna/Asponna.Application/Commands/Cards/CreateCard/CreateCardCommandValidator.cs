@@ -15,7 +15,7 @@ namespace Asponna.Application.Commands.Cards.CreateCard
                 .NotEmpty();
 
             RuleFor(x => x.TaskBoardId)
-                .LessThanOrEqualTo(0);
+                .GreaterThan(0);
 
             RuleFor(x => x.TaskBoardId)
                 .MustAsync(async (taskBoardId, cancellation) =>

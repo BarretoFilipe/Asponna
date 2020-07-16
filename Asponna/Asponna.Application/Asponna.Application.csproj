@@ -9,14 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\TaskBoards\CreateTaskBoard\" />
-    <Folder Include="Commands\TaskBoards\DeleteTaskBoard\" />
-    <Folder Include="Commands\TaskBoards\UpdateTaskBoard\" />
-    <Folder Include="Queries\TaskBoards\GetAll\" />
-    <Folder Include="Queries\TaskBoards\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="8.6.2" />
     <PackageReference Include="MediatR" Version="8.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />

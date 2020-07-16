@@ -8,5 +8,6 @@
         public bool Completed { get; set; }
         public int Position { get; set; }
         public int TaskBoardId { get; set; }
+        public int? PriorityId { get; set; }
     }
 }

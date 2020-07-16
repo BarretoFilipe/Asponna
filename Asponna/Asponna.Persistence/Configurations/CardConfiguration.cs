@@ -16,8 +16,7 @@ namespace Asponna.Persistence.Configurations
                 .HasMaxLength(100)
                 .IsRequired();
 
-            cardConfiguration.Property(c => c.Description)
-                .IsRequired();
+            cardConfiguration.Property(c => c.Description);
 
             cardConfiguration.Property(c => c.Completed)
                 .IsRequired();
@@ -30,6 +29,12 @@ namespace Asponna.Persistence.Configurations
                 .HasForeignKey(c => c.TaskBoardId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
+
+            cardConfiguration.HasOne(c => c.Priority)
+                .WithMany(p => p.Cards)
+                .HasForeignKey(c => c.PriorityId)
+                .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Asponna.Persistence
 
         internal DbSet<TaskBoard> TaskBoards { get; set; }
         internal DbSet<Card> Cards { get; set; }
+        internal DbSet<Priority> Priorities { get; set; }
 
         public AsponnaContext(DbContextOptions<AsponnaContext> options)
             : base(options)

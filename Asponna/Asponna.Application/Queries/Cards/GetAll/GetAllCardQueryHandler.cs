@@ -1,9 +1,7 @@
 ﻿using Asponna.Domain.Repositories;
 using MediatR;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,7 +27,8 @@ namespace Asponna.Application.Queries.Cards.GetAll
                 Description = card.Description,
                 Completed = card.Completed,
                 Position = card.Position,
-                TaskBoardId = card.TaskBoardId
+                TaskBoardId = card.TaskBoardId,
+                PriorityId = card.PriorityId
             }).ToList();
 
             return cardsListViewModel;

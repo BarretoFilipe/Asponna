@@ -1,4 +1,6 @@
 ﻿using Asponna.Application.Commands.Cards.CreateCard;
+using Asponna.Application.Commands.Cards.DeleteCard;
+using Asponna.Application.Commands.Cards.UpdateCard;
 using Asponna.Application.Queries.Cards.Get;
 using Asponna.Application.Queries.Cards.GetAll;
 using Asponna.Domain.Repositories.Parameters;
@@ -9,19 +11,19 @@ using System.Threading.Tasks;
 
 namespace Asponna.Api.Controllers
 {
-    public class CardController : BaseController
+    public class CardsController : BaseController
     {
         [HttpGet("")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<CardListViewModel>>> Get([FromQuery] CardParameter cardParameter)
+        public async Task<ActionResult<List<CardListViewModel>>> GetAll([FromQuery] CardParameter cardParameter)
         {
             return Ok(await Mediator.Send(new GetAllCardQuery(cardParameter)));
         }
 
-        [HttpGet("{id:int}", Name = nameof(GetById))]
+        [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<CardViewModel>> GetById(int id)
+        public async Task<ActionResult<CardViewModel>> Get(int id)
         {
             return Ok(await Mediator.Send(new GetCardQuery { Id = id }));
         }
@@ -32,23 +34,23 @@ namespace Asponna.Api.Controllers
         {
             var card = await Mediator.Send(cardCommand);
 
-            return CreatedAtRoute(nameof(GetById), new { card.Id }, card);
+            return Ok(card);
         }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> Update([FromBody] CreateCardCommand cardCommand)
+        public async Task<IActionResult> Update([FromBody] UpdateCardCommand cardCommand)
         {
             var card = await Mediator.Send(cardCommand);
 
-            return CreatedAtRoute(nameof(GetById), new { card.Id }, card);
+            return Ok(card);
         }
 
         [HttpDelete("{id:int}")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Delete(int id)
         {
-            await Mediator.Send(null);
+            await Mediator.Send(new DeleteCardCommand { Id = id });
 
             return NoContent();
         }

@@ -7,5 +7,6 @@
         public string Description { get; set; }
         public bool Completed { get; set; }
         public int TaskBoardId { get; set; }
+        public int? PriorityId { get; set; }
     }
 }

@@ -18,13 +18,17 @@ namespace Asponna.Application.Queries.Cards.Get
         {
             var card = await _cardRepository.GetAsync(request.Id);
 
+            if (card == null)
+                return new CardViewModel();
+
             var cardViewModel = new CardViewModel
             {
                 Id = card.Id,
                 Title = card.Title,
                 Description = card.Description,
                 Completed = card.Completed,
-                TaskBoardId = card.TaskBoardId
+                TaskBoardId = card.TaskBoardId,
+                PriorityId = card.PriorityId
             };
 
             return cardViewModel;

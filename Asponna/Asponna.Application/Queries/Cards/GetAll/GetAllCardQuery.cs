@@ -12,6 +12,5 @@ namespace Asponna.Application.Queries.Cards.GetAll
         {
             CardParameter = cardParameter;
         }
-        
     }
 }

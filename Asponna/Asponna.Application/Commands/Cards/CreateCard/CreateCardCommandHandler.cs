@@ -1,4 +1,5 @@
-﻿using Asponna.Domain.Entities;
+﻿using Asponna.Application.Queries.Cards.Get;
+using Asponna.Domain.Entities;
 using Asponna.Domain.Repositories;
 using MediatR;
 using System.Threading;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Asponna.Application.Commands.Cards.CreateCard
 {
-    public class CreateCardCommandHandler : IRequestHandler<CreateCardCommand, Card>
+    public class CreateCardCommandHandler : IRequestHandler<CreateCardCommand, CardViewModel>
     {
         private readonly ICardRepository _cardRepository;
 
@@ -15,20 +16,31 @@ namespace Asponna.Application.Commands.Cards.CreateCard
             _cardRepository = cardRepository;
         }
 
-        public async Task<Card> Handle(CreateCardCommand request, CancellationToken cancellationToken)
+        public async Task<CardViewModel> Handle(CreateCardCommand request, CancellationToken cancellationToken)
         {
             var card = new Card
                 (
                     request.Title,
                     request.Description,
-                    request.TaskBoardId
+                    request.TaskBoardId,
+                    request.PriorityId
                 );
 
             _cardRepository.Create(card);
 
             await _cardRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
-            return card;
+            var viewModel = new CardViewModel
+            {
+                Id = card.Id,
+                Title = card.Title,
+                Description = card.Description,
+                Completed = card.Completed,
+                TaskBoardId = card.TaskBoardId,
+                PriorityId = card.PriorityId
+            };
+
+            return viewModel;
         }
     }
 }

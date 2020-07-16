@@ -10,7 +10,7 @@ namespace Asponna.Application.Commands.Cards.UpdateCard
         public UpdateCardCommandValidator(ICardRepository cardRepository, ITaskBoardRepository taskBoardRepository)
         {
             RuleFor(x => x.Id)
-                .LessThanOrEqualTo(0);
+                .GreaterThan(0);
 
             RuleFor(x => x.Id)
                 .MustAsync(async (cardId, cancellation) =>
@@ -18,13 +18,11 @@ namespace Asponna.Application.Commands.Cards.UpdateCard
                 .WithMessage("TaskBoardId not exist");
 
             RuleFor(x => x.Title)
-                .NotEmpty();
-
-            RuleFor(x => x.Description)
+                .MaximumLength(100)
                 .NotEmpty();
 
             RuleFor(x => x.TaskBoardId)
-                .LessThanOrEqualTo(0);
+                .GreaterThan(0);
 
             RuleFor(x => x.TaskBoardId)
                 .MustAsync(async (taskBoardId, cancellation) =>
