@@ -5,15 +5,15 @@ using System.Linq;
 
 namespace Asponna.Application.Exceptions
 {
-    public class ValidationException : Exception
+    public class FluentValidationException : Exception
     {
-        public ValidationException()
+        public FluentValidationException()
             : base("One or more validation failures have occurred.")
         {
             Failures = new Dictionary<string, string[]>();
         }
 
-        public ValidationException(List<ValidationFailure> failures)
+        public FluentValidationException(List<ValidationFailure> failures)
             : this()
         {
             var propertyNames = failures

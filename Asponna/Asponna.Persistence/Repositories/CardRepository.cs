@@ -61,5 +61,11 @@ namespace Asponna.Persistence.Repositories
         {
             _context.Cards.Remove(card);
         }
+
+        public async Task<bool> IdExistsAsync(int id)
+        {
+            var card = await _context.Cards.FindAsync(id);
+            return card != null;
+        }
     }
 }

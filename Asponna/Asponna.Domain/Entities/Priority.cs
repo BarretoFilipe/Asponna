@@ -32,7 +32,6 @@ namespace Asponna.Domain.Entities
         {
             if (!Regex.Match(color, DomainConstants.ColorRegex).Success)
                 throw new DomainException("Color is not valid");
-
             Color = color;
         }
     }

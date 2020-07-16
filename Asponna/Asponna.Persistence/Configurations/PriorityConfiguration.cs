@@ -1,4 +1,5 @@
 ﻿using Asponna.Domain.Entities;
+using Asponna.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,16 +10,22 @@ namespace Asponna.Persistence.Configurations
         public void Configure(EntityTypeBuilder<Priority> priorityConfiguration)
         {
             priorityConfiguration.ToTable(nameof(Priority));
-            
-            priorityConfiguration.HasKey(c => c.Id);
 
-            priorityConfiguration.Property(c => c.Name)
+            priorityConfiguration.HasKey(p => p.Id);
+
+            priorityConfiguration.Property(p => p.Name)
                 .HasMaxLength(100)
                 .IsRequired();
 
-            priorityConfiguration.Property(c => c.Color)
+            priorityConfiguration.Property(p => p.Color)
                 .HasMaxLength(7)
                 .IsRequired();
+
+            /*priorityConfiguration.OwnsOne(p => p.Color)
+                .Property(c => c)
+                .HasColumnName(nameof(Color))
+                .HasMaxLength(7)
+                .IsRequired();*/
         }
     }
 }

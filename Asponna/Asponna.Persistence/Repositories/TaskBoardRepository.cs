@@ -3,7 +3,6 @@ using Asponna.Domain.Repositories;
 using Asponna.Domain.SharedKernel;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Asponna.Persistence.Repositories
@@ -48,6 +47,23 @@ namespace Asponna.Persistence.Repositories
         public void Delete(TaskBoard taskBoard)
         {
             _context.TaskBoards.Remove(taskBoard);
+        }
+
+        public async Task<bool> IdExistsAsync(int id)
+        {
+            var taskBoard = await _context.TaskBoards.FindAsync(id);
+            return taskBoard != null;
+        }
+
+        public async Task<bool> NoCardOnTaskBoard(int id)
+        {
+            var taskBoard = await _context.TaskBoards
+                .Include(x => x.Cards)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            if (taskBoard == null)
+                return true;
+
+            return taskBoard.Cards.Count == 0;
         }
     }
 }

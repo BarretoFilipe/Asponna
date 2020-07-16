@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentValidationException = Asponna.Application.Exceptions.FluentValidationException;
 
 namespace Asponna.Application.Infrastructure
 {
@@ -29,7 +30,7 @@ namespace Asponna.Application.Infrastructure
 
             if (failures.Count != 0)
             {
-                throw new ValidationException(failures);
+                throw new FluentValidationException(failures);
             }
 
             return next();

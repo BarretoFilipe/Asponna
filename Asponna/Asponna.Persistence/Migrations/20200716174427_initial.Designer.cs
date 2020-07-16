@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Asponna.Persistence.Migrations
 {
     [DbContext(typeof(AsponnaContext))]
-    [Migration("20200716095014_initial")]
+    [Migration("20200716174427_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

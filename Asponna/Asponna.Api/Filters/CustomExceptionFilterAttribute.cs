@@ -11,12 +11,12 @@ namespace Asponna.Api.Filters
     {
         public override void OnException(ExceptionContext context)
         {
-            if (context.Exception is ValidationException)
+            if (context.Exception is FluentValidationException)
             {
                 context.HttpContext.Response.ContentType = "application/json";
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 context.Result = new JsonResult(
-                    ((ValidationException)context.Exception).Failures);
+                    ((FluentValidationException)context.Exception).Failures);
 
                 return;
             }

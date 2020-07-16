@@ -1,13 +1,16 @@
-using Asponna.Application;
 using Asponna.Application.Commands.Cards.CreateCard;
+using Asponna.Application.Infrastructure;
+using Asponna.Application.Queries.Cards.Get;
 using Asponna.Persistence;
 using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace Asponna.Api
 {
@@ -24,11 +27,13 @@ namespace Asponna.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddControllers()
+                .AddMvc()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateCardCommandValidator>());
 
             services.AddPersistence(Configuration);
-            services.AddApplication();
+
+            services.AddMediatR(typeof(GetCardQueryHandler).GetTypeInfo().Assembly);
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidatorBehavior<,>));
 
             services.AddSwaggerGen(c =>
             {
@@ -43,18 +48,18 @@ namespace Asponna.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Asponna V1");
                 c.RoutePrefix = string.Empty;
-            });
-
-            app.UseRouting();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
             });
         }
     }

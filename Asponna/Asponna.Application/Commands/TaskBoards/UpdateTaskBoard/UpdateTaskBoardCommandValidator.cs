@@ -1,5 +1,4 @@
-﻿using Asponna.Application.Commands.TaskBoards.Validators;
-using Asponna.Domain.Repositories;
+﻿using Asponna.Domain.Repositories;
 using FluentValidation;
 
 namespace Asponna.Application.Commands.TaskBoards.UpdateTaskBoard
@@ -13,7 +12,7 @@ namespace Asponna.Application.Commands.TaskBoards.UpdateTaskBoard
 
             RuleFor(x => x.Id)
                 .MustAsync(async (taskBoardId, cancellation) =>
-                    await TaskboardDataBaseValidator.TaskBoardIdExists(taskBoardRepository, taskBoardId))
+                    await taskBoardRepository.IdExistsAsync(taskBoardId))
                 .WithMessage("Id not exist");
 
             RuleFor(x => x.Name)

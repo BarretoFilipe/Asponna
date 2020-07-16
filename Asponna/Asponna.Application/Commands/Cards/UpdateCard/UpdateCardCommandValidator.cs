@@ -1,6 +1,4 @@
-﻿using Asponna.Application.Commands.Cards.Validators;
-using Asponna.Application.Commands.TaskBoards.Validators;
-using Asponna.Domain.Repositories;
+﻿using Asponna.Domain.Repositories;
 using FluentValidation;
 
 namespace Asponna.Application.Commands.Cards.UpdateCard
@@ -14,7 +12,7 @@ namespace Asponna.Application.Commands.Cards.UpdateCard
 
             RuleFor(x => x.Id)
                 .MustAsync(async (cardId, cancellation) =>
-                    await CardDataBaseValidator.IdExists(cardRepository, cardId))
+                    await cardRepository.IdExistsAsync(cardId))
                 .WithMessage("TaskBoardId not exist");
 
             RuleFor(x => x.Title)
@@ -26,7 +24,7 @@ namespace Asponna.Application.Commands.Cards.UpdateCard
 
             RuleFor(x => x.TaskBoardId)
                 .MustAsync(async (taskBoardId, cancellation) =>
-                    await TaskboardDataBaseValidator.TaskBoardIdExists(taskBoardRepository, taskBoardId))
+                    await taskBoardRepository.IdExistsAsync(taskBoardId))
                 .WithMessage("TaskBoardId not exist");
         }
     }

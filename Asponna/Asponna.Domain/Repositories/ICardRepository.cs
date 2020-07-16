@@ -17,5 +17,7 @@ namespace Asponna.Domain.Repositories
         Task<Card> GetAsync(int id);
 
         Task<IEnumerable<Card>> GetAllAsync(CardParameter cardParameter);
+
+        Task<bool> IdExistsAsync(int id);
     }
 }

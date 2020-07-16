@@ -1,5 +1,4 @@
-﻿using Asponna.Application.Commands.TaskBoards.Validators;
-using Asponna.Domain.Repositories;
+﻿using Asponna.Domain.Repositories;
 using FluentValidation;
 
 namespace Asponna.Application.Commands.Cards.CreateCard
@@ -19,7 +18,7 @@ namespace Asponna.Application.Commands.Cards.CreateCard
 
             RuleFor(x => x.TaskBoardId)
                 .MustAsync(async (taskBoardId, cancellation) =>
-                    await TaskboardDataBaseValidator.TaskBoardIdExists(taskBoardRepository, taskBoardId))
+                    await taskBoardRepository.IdExistsAsync(taskBoardId))
                 .WithMessage("TaskBoardId not exist");
         }
     }
