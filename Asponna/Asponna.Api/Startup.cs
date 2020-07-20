@@ -1,15 +1,17 @@
 using Asponna.Application.Commands.Cards.CreateCard;
-using Asponna.Application.Infrastructure;
+using Asponna.Application.Common.Behaviors;
 using Asponna.Application.Queries.Cards.Get;
 using Asponna.Persistence;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Linq;
 using System.Reflection;
 
 namespace Asponna.Api
@@ -27,13 +29,28 @@ namespace Asponna.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddMvc()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateCardCommandValidator>());
+                .AddControllers()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetCardQuery>())
+                .ConfigureApiBehaviorOptions(options =>
+                {
+                    options.InvalidModelStateResponseFactory = invalidModel =>
+                    {
+                        var errors = invalidModel.ModelState.Values.Where(values => values.Errors.Count > 0)
+                            .SelectMany(values => values.Errors)
+                            .Select(values => values.ErrorMessage)
+                            .ToList();
+
+                        return new BadRequestObjectResult(new
+                        {
+                            Message = errors
+                        });
+                    };
+                });
 
             services.AddPersistence(Configuration);
 
             services.AddMediatR(typeof(GetCardQueryHandler).GetTypeInfo().Assembly);
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidatorBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
 
             services.AddSwaggerGen(c =>
             {
@@ -48,7 +65,7 @@ namespace Asponna.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {

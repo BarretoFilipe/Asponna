@@ -11,8 +11,15 @@ namespace Asponna.Application.Commands.TaskBoards.DeleteTaskBoard
                 .NotEmpty();
 
             RuleFor(x => x.Id)
-                .MustAsync(async (id, cancellation) =>
-                    await taskBoardRepository.NoCardOnTaskBoard(id))
+                .MustAsync(async (taskBoardId, cancellation) =>
+                    await taskBoardRepository.IdExistsAsync(taskBoardId))
+                .WithMessage("Id not exist");
+
+            RuleFor(x => x.Id)
+                .MustAsync(async (taskBoardId, cancellation) =>
+                {
+                    return await taskBoardRepository.NoCardOnTaskBoard(taskBoardId);
+                })
                 .WithMessage("Can't remove a Task Board, there are cards");
         }
     }
