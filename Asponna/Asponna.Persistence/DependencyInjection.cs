@@ -31,7 +31,7 @@ namespace Asponna.Persistence
         private static void AddRepositories(this IServiceCollection services)
         {
             var repositoryInterfaces = typeof(IRepository<>).Assembly.GetTypes()
-                .Where(type => type.GetInterfaces().Any(@interface => @interface.IsGenericType && @interface.Name == "IRepository`1"))
+                .Where(type => type.GetInterfaces().Any(@interface => @interface.IsGenericType && @interface.Name == typeof(IRepository<>).Name))
                 .ToList();
 
             var types = Assembly.GetExecutingAssembly().GetTypes();
