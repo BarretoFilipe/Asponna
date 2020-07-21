@@ -19,6 +19,6 @@ namespace Asponna.Domain.Repositories
 
         Task<bool> IdExistsAsync(int id);
 
-        Task<bool> NoCardOnTaskBoard(int id);
+        Task<bool> CardsOnTaskBoard(int id);
     }
 }

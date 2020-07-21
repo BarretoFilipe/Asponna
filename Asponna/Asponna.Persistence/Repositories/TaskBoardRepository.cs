@@ -55,15 +55,15 @@ namespace Asponna.Persistence.Repositories
             return taskBoard != null;
         }
 
-        public async Task<bool> NoCardOnTaskBoard(int id)
+        public async Task<bool> CardsOnTaskBoard(int id)
         {
             var taskBoard = await _context.TaskBoards
                 .Include(x => x.Cards)
                 .FirstOrDefaultAsync(x => x.Id == id);
             if (taskBoard == null)
-                return true;
+                return false;
 
-            return taskBoard.Cards.Count == 0;
+            return taskBoard?.Cards.Count != 0;
         }
     }
 }

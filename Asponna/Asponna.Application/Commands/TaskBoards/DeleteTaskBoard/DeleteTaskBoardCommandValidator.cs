@@ -18,7 +18,7 @@ namespace Asponna.Application.Commands.TaskBoards.DeleteTaskBoard
             RuleFor(x => x.Id)
                 .MustAsync(async (taskBoardId, cancellation) =>
                 {
-                    return await taskBoardRepository.NoCardOnTaskBoard(taskBoardId);
+                    return ! await taskBoardRepository.CardsOnTaskBoard(taskBoardId);
                 })
                 .WithMessage("Can't remove a Task Board, there are cards");
         }
