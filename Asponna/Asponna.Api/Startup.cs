@@ -1,4 +1,4 @@
-using Asponna.Application.Commands.Cards.CreateCard;
+using Asponna.Api.Infrastructure.Middleware;
 using Asponna.Application.Common.Behaviors;
 using Asponna.Application.Queries.Cards.Get;
 using Asponna.Persistence;
@@ -67,6 +67,9 @@ namespace Asponna.Api
             }
 
             app.UseRouting();
+
+            app.UseCustomExceptionHandler();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
